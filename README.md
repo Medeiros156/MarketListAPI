@@ -1,8 +1,4 @@
-# Build a REST API with Node JS and Express
-
-![REST API](https://i.ibb.co/7GWCCbp/Screenshot-2020-07-12-at-08-30-32.png)
-
-## Introduction
-This is a code repository for the corresponding video tutorial. 
-
-In this video, we will create a Node JS and Express JS CRUD REST API.
+Rest Api com autorização JWT feita com Nodejs e Express conectado ao Postgresdb.
+GET /list -> Busca no banco de dados os itens da lista de compras.
+POST /list -> Inclui itens no banco de dados da lista.
+DELETE /del -> Remove o item do banco de dados buscando pelo nome.
