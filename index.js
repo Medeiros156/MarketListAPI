@@ -18,7 +18,7 @@ const SECRET = process.env.SECRET;
 const SECRET_KEY = process.env.SECRET_KEY;
 
 var corsOptions = {
-  origin: "https://medeiros156.github.io/MarketList/",
+  origin: "https://medeiros156.github.io",
   methods: ["GET", "POST", "DELETE"],
   allowedHeaders: "authorization",
   maxAge: 86400,
