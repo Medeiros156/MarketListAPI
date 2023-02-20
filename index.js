@@ -1,4 +1,4 @@
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 import express from "express";
 import bodyParser from "body-parser";
 
@@ -10,18 +10,17 @@ import pingRoutes from "./routes/ping.js";
 import cors from "cors";
 import { ping } from "./controllers/ping.js";
 
-dotenv.config()
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 const SECRET = process.env.SECRET;
 const SECRET_KEY = process.env.SECRET_KEY;
 
-
 var corsOptions = {
-  origin: true,
+  origin: "https://medeiros156.github.io/MarketList/",
   methods: ["GET", "POST", "DELETE"],
-  allowedHeaders: "*",
+  allowedHeaders: "authorization",
   maxAge: 86400,
   preflightContinue: true,
 };
@@ -33,15 +32,11 @@ app.post("/login", (req, res) => {
   const { key } = req.body;
 
   if (key == SECRET_KEY) {
-    // validate username and password here
-    // ...
-
-    // if the username and password are valid, generate a JWT
     const token = jwt.sign({ key }, SECRET);
 
     res.json({ token });
   } else {
-    res.status(401).json({error: "Invalid Key"})
+    res.status(401).json({ error: "Invalid Key" });
   }
 });
 app.use(
@@ -59,8 +54,6 @@ app.use(
       if (err) {
         return res.status(401).json({ error: "Invalid token" });
       }
-
-      // attach the decoded token to the request object for use in downstream middleware
       req.user = decoded;
 
       next();
