@@ -75,7 +75,7 @@ app.use((err, req, res, next) => {
   }
 });
 app.use("/ping", pingRoutes);
-app.get("/", (req, res) =>
+app.get("/", cors(corsOptions), (req, res) =>
   res.send("Welcome to MarketList API!")
 );
 app.all("*", (req, res) =>
