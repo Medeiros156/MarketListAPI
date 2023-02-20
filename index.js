@@ -18,7 +18,7 @@ const SECRET = process.env.SECRET;
 const SECRET_KEY = process.env.SECRET_KEY;
 
 var corsOptions = {
-  origin: "https://medeiros156.github.io",
+  origin: true,
   methods: ["GET", "POST", "DELETE"],
   allowedHeaders: "authorization",
   maxAge: 86400,
@@ -28,7 +28,7 @@ app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 
-app.post("/login", (req, res) => {
+app.post("/login", cors(corsOptions), (req, res) => {
   const { key } = req.body;
 
   if (key == SECRET_KEY) {
