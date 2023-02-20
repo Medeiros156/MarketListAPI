@@ -20,7 +20,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 var corsOptions = {
   origin: true,
   methods: ["GET", "POST", "DELETE"],
-  allowedHeaders: "authorization",
+  allowedHeaders: "*",
   maxAge: 86400,
   preflightContinue: true,
 };
@@ -28,6 +28,9 @@ app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 
+app.get("/", cors(corsOptions), (req, res) =>
+  res.send("Welcome to MarketList API!")
+);
 app.post("/login", cors(corsOptions), (req, res) => {
   const { key } = req.body;
 
@@ -66,12 +69,9 @@ app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
     res.status(401).json({ error: "Invalid token" });
   }
-});
-app.use("/ping", pingRoutes);
-app.get("/", cors(corsOptions), (req, res) =>
-  res.send("Welcome to MarketList API!")
-);
-app.all("*", (req, res) =>
+}, cors(corsOptions));
+app.use("/ping", cors(corsOptions), pingRoutes);
+app.all("*", cors(corsOptions), (req, res) =>
   res.send("You've tried reaching a route that doesn't exist.")
 );
 
