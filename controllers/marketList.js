@@ -1,12 +1,12 @@
 import { db } from "../db_postgres_supabase.js";
 
 export const getList = async (req, res) => { 
-    res.send(await db.any('SELECT * FROM marketlist'))
+    res.status(200).send(await db.any('SELECT * FROM marketlist'))
 };
 export const removeFromList = async (req, res) => { 
     let item = req.query.q
     console.log(item);
-    res.send(await db.any('DELETE FROM Marketlist WHERE items = $1', [item]))
+    res.status(200).send(await db.any('DELETE FROM Marketlist WHERE items = $1', [item]))
 };
 
 export const setList = (req, res) => { 
@@ -17,6 +17,6 @@ export const setList = (req, res) => {
     
     db.query('INSERT INTO marketlist(items) VALUES($1)', [netItem.items])
     
-    res.send("data inserted")
+    res.status(200).send("data inserted")
 };
 

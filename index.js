@@ -43,7 +43,8 @@ app.post("/login", cors(corsOptions), (req, res) => {
   }
 });
 app.use(
-  "/market", cors(corsOptions),
+  "/market",
+  cors(corsOptions),
   (req, res, next) => {
     const authHeader = req.headers.authorization;
 
@@ -64,7 +65,14 @@ app.use(
   },
   marketListRoutes
 );
-
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
     res.status(401).json({ error: "Invalid token" });
@@ -72,7 +80,7 @@ app.use((err, req, res, next) => {
 }, cors(corsOptions));
 app.use("/ping", cors(corsOptions), pingRoutes);
 app.all("*", cors(corsOptions), (req, res) =>
-  res.send("You've tried reaching a route that doesn't exist.")
+  res.status(404).send("You've tried reaching a route that doesn't exist.")
 );
 
 app.listen(PORT, () =>
