@@ -40,7 +40,7 @@ app.post("/login", cors(corsOptions), (req, res) => {
   }
 });
 app.use(
-  "/market",
+  "/market", cors(corsOptions),
   (req, res, next) => {
     const authHeader = req.headers.authorization;
 
