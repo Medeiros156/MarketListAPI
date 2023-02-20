@@ -18,11 +18,11 @@ const SECRET = process.env.SECRET;
 const SECRET_KEY = process.env.SECRET_KEY;
 
 var corsOptions = {
-  origin: true,
-  methods: ["GET", "POST", "DELETE"],
-  allowedHeaders: "*",
-  maxAge: 86400,
-  preflightContinue: true,
+  // origin: true,
+  // methods: ["GET", "POST", "DELETE"],
+  // allowedHeaders: "*",
+  // maxAge: 86400,
+  // preflightContinue: true,
 };
 app.use(cors(corsOptions));
 
@@ -65,14 +65,7 @@ app.use(
   },
   marketListRoutes
 );
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
     res.status(401).json({ error: "Invalid token" });
