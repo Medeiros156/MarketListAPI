@@ -3,7 +3,6 @@ import express from "express";
 import bodyParser from "body-parser";
 
 import jwt from "jsonwebtoken";
-import expressJwt from "express-jwt";
 
 import marketListRoutes from "./routes/marketList.js";
 import pingRoutes from "./routes/ping.js";
@@ -17,21 +16,15 @@ const PORT = process.env.PORT || 5000;
 const SECRET = process.env.SECRET;
 const SECRET_KEY = process.env.SECRET_KEY;
 
-var corsOptions = {
-  // origin: true,
-  // methods: ["GET", "POST", "DELETE"],
-  // allowedHeaders: "*",
-  // maxAge: 86400,
-  // preflightContinue: true,
-};
-app.use(cors(corsOptions));
+
+app.use(cors());
 
 app.use(bodyParser.json());
 
-app.get("/", cors(corsOptions), (req, res) =>
+app.get("/", cors(), (req, res) =>
   res.send("Welcome to MarketList API!")
 );
-app.post("/login", cors(corsOptions), (req, res) => {
+app.post("/login", cors(), (req, res) => {
   const { key } = req.body;
 
   if (key == SECRET_KEY) {
@@ -44,7 +37,7 @@ app.post("/login", cors(corsOptions), (req, res) => {
 });
 app.use(
   "/market",
-  cors(corsOptions),
+  cors(),
   (req, res, next) => {
     const authHeader = req.headers.authorization;
 
@@ -70,9 +63,9 @@ app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
     res.status(401).json({ error: "Invalid token" });
   }
-}, cors(corsOptions));
-app.use("/ping", cors(corsOptions), pingRoutes);
-app.all("*", cors(corsOptions), (req, res) =>
+}, cors());
+app.use("/ping", cors(), pingRoutes);
+app.all("*", cors(), (req, res) =>
   res.status(404).send("You've tried reaching a route that doesn't exist.")
 );
 
