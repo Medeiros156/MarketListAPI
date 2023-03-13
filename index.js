@@ -5,9 +5,7 @@ import bodyParser from "body-parser";
 import jwt from "jsonwebtoken";
 
 import marketListRoutes from "./routes/marketList.js";
-import pingRoutes from "./routes/ping.js";
 import cors from "cors";
-import { ping } from "./controllers/ping.js";
 
 dotenv.config();
 const app = express();
@@ -35,8 +33,7 @@ app.post("/login", cors(), (req, res) => {
     res.status(401).json({ error: "Invalid Key" });
   }
 });
-app.use(
-  "/market",
+app.use("/market",
   cors(),
   (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -64,7 +61,6 @@ app.use((err, req, res, next) => {
     res.status(401).json({ error: "Invalid token" });
   }
 }, cors());
-app.use("/ping", cors(), pingRoutes);
 app.all("*", cors(), (req, res) =>
   res.status(404).send("You've tried reaching a route that doesn't exist.")
 );
@@ -73,6 +69,3 @@ app.listen(PORT, () =>
   console.log(`Server running on port: http://localhost:${PORT}`)
 );
 
-setInterval(() => {
-  ping();
-}, 300000);

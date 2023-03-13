@@ -1,4 +1,5 @@
 import express from 'express';
+import { getImage } from '../controllers/image.js';
 import { getList, setList, removeFromList } from '../controllers/marketList.js';
 
 
@@ -8,7 +9,7 @@ const router = express.Router();
 
 router.get('/list', getList);
 
-router.get('/', );
+router.get('/image', getImage);
 
 router.post('/list', setList);
 
