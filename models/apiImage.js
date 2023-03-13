@@ -19,12 +19,10 @@ export const fetchUnsplashImage = async (keyWord) => {
         referrerPolicy: "no-referrer",
       }
     );
+    const data = await response.json();
+    const listUrls = data.results.map((result) => result.urls.regular);
+    return listUrls;
   } catch (error) {
     console.log(error);
   }
-  
-
-  const data = await response.json();
-  const listUrls = data.results.map((result) => result.urls.regular);
-  return listUrls;
 };
