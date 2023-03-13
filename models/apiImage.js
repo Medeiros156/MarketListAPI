@@ -22,9 +22,7 @@ export const fetchUnsplashImage = async (keyWord) => {
   } catch (error) {
     console.log(error);
   }
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
+  
 
   const data = await response.json();
   const listUrls = data.results.map((result) => result.urls.regular);
